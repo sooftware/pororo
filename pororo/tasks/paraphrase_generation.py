@@ -245,7 +245,7 @@ class PororoTransformerTransMulti(PororoGenerationBase):
         top_k: int = -1,
         top_p: float = -1,
         no_repeat_ngram_size: int = 4,
-        len_penalty: float = 1.0,
+        len_penalty: float = 1.0,g
         **kwargs,
     ) -> str:
         """
@@ -271,6 +271,7 @@ class PororoTransformerTransMulti(PororoGenerationBase):
         if top_k != -1 or top_p != -1:
             sampling = True
 
+        print(self._model)
         outputs = self._model.translate(
             texts,
             beam=10,

@@ -154,10 +154,10 @@ class KoBartModel(object):
             (List[str]): list of generated tokens (if return_tokens=True)
 g
         """
-        # if isinstance(text, str):
-        #     texts = [text]
-        # else:
-        #     texts = texts
+        if isinstance(text, str):
+            texts = [text]
+        else:
+            texts = texts
 
         tokenized = self.tokenize(texts)
         input_ids = tokenized["input_ids"]
