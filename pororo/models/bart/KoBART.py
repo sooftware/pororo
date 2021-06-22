@@ -201,16 +201,9 @@ class KoBartModel(object):
                 skip_special_tokens=True,
             )
 
-            n_bests = list()
+            print("=======")
 
-            for o in output:
-                n_bests.append(o.strip() if isinstance(
+            return (output[0].strip() if isinstance(
                 text,
                 str,
             ) else [o.strip() for o in output])
-
-            return n_bests
-            # return (output[0].strip() if isinstance(
-            #     text,
-            #     str,
-            # ) else [o.strip() for o in output])
