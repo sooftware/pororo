@@ -143,9 +143,9 @@ class PororoGenerationBase(PororoTaskBase):
     def __call__(
         self,
         text: str,
-        beam: int = 5,
+        beam: int = 10,
         temperature: float = 1.0,
-        top_k: int = -1,
+        top_k: int = 10,
         top_p: float = -1,
         no_repeat_ngram_size: int = 4,
         len_penalty: float = 1.0,
