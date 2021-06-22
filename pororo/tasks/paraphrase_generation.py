@@ -245,7 +245,7 @@ class PororoTransformerTransMulti(PororoGenerationBase):
         top_k: int = -1,
         top_p: float = -1,
         no_repeat_ngram_size: int = 4,
-        len_penalty: float = 1.0,g
+        len_penalty: float = 1.0,
         **kwargs,
     ) -> str:
         """
