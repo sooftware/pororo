@@ -117,7 +117,7 @@ class KoBartModel(object):
     @torch.no_grad()
     def translate(
         self,
-        text: str,
+        texts: list,
         beam: int = 5,
         sampling: bool = False,
         temperature: float = 1.0,
@@ -158,7 +158,7 @@ class KoBartModel(object):
         if isinstance(text, str):
             texts = [text]
         else:
-            texts = text
+            texts = texts
 
         tokenized = self.tokenize(texts)
         input_ids = tokenized["input_ids"]

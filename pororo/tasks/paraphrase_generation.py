@@ -198,7 +198,7 @@ class PororoTransformerTransMulti(PororoGenerationBase):
         """
         return f"[{lang + self._mapping[lang]}]"
 
-    def _preprocess(self, text: str) -> str:
+    def _preprocess(self, texts: list) -> list:
         """
         Preprocess non-chinese input sentence to replace whitespace token with whitespace
 
@@ -209,13 +209,17 @@ class PororoTransformerTransMulti(PororoGenerationBase):
             str: preprocessed non-chinese sentence
 
         """
-        if self.config.lang == "en":
-            pieces = " ".join(self._tokenizer.segment(text.strip()))
-        else:
-            pieces = " ".join([c if c != " " else "▁" for c in text.strip()])
-        return f"{self._langtok(self.config.lang)} {pieces} {self._langtok(self.config.lang)}"
+        new_texts = list()
 
-    def _postprocess(self, output: str) -> str:
+        for text in texts:
+            if self.config.lang == "en":
+                pieces = " ".join(self._tokenizer.segment(text.strip()))
+            else:
+                pieces = " ".join([c if c != " " else "▁" for c in text.strip()])
+            new_texts.append(f"{self._langtok(self.config.lang)} {pieces} {self._langtok(self.config.lang)}")
+        return new_texts
+
+    def _postprocess(self, outputs: str) -> str:
         """
         Postprocess output sentence to replace whitespace
 
@@ -226,11 +230,16 @@ class PororoTransformerTransMulti(PororoGenerationBase):
             str: postprocessed output sentence
 
         """
-        return output.replace(" ", "").replace("▁", " ").strip()
+        new_outputs = list()
+
+        for output in outputs:
+            new_outputs.append(output.replace(" ", "").replace("▁", " ").strip())
+
+        return new_outputs
 
     def predict(
         self,
-        text: str,
+        texts: list,
         beam: int = 5,
         temperature: float = 1.0,
         top_k: int = -1,
@@ -255,15 +264,15 @@ class PororoTransformerTransMulti(PororoGenerationBase):
             str: machine translated sentence
 
         """
-        text = self._preprocess(text)
+        texts = self._preprocess(texts)
 
         sampling = False
 
         if top_k != -1 or top_p != -1:
             sampling = True
 
-        output = self._model.translate(
-            text,
+        outputs = self._model.translate(
+            texts,
             beam=beam,
             sampling=sampling,
             temperature=temperature,
@@ -274,8 +283,8 @@ class PororoTransformerTransMulti(PororoGenerationBase):
             no_repeat_ngram_size=no_repeat_ngram_size,
             lenpen=len_penalty,
         )
-        output = self._postprocess(output)
-        return output
+        outputs = self._postprocess(outputs)
+        return outputs
 
 
 class PororoTransformerParaphrase(PororoGenerationBase):
