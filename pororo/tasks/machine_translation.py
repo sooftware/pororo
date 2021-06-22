@@ -323,7 +323,6 @@ class PororoTransformerTransMulti(PororoGenerationBase):
         no_repeat_ngram_size: int = 4,
         len_penalty: float = 1.0,
     ):
-        assert isinstance(text, str), "Input text should be string type"
 
         assert src in [
             "ko",
