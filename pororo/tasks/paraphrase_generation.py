@@ -264,6 +264,8 @@ class PororoTransformerTransMulti(PororoGenerationBase):
             str: machine translated sentence
 
         """
+        import logging
+        logger = logging.getLogger(__name__)
         texts = self._preprocess(texts)
 
         sampling = False
@@ -273,7 +275,7 @@ class PororoTransformerTransMulti(PororoGenerationBase):
 
         outputs = self._model.translate(
             texts,
-            beam=beam,
+            beam=10,
             sampling=sampling,
             temperature=temperature,
             sampling_topk=top_k,
@@ -283,6 +285,7 @@ class PororoTransformerTransMulti(PororoGenerationBase):
             no_repeat_ngram_size=no_repeat_ngram_size,
             lenpen=len_penalty,
         )
+        logger.info(outputs)
         outputs = self._postprocess(outputs)
         return outputs
 
