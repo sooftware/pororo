@@ -261,7 +261,7 @@ class PororoTransformerTransMulti(PororoGenerationBase):
 
     def predict(
         self,
-        text: str,
+        text: list,
         src: str,
         tgt: str,
         beam: int = 5,
@@ -338,16 +338,19 @@ class PororoTransformerTransMulti(PororoGenerationBase):
             "en",
         ], "Target language must be one of CJKE !"
 
-        return " ".join([
-            self.predict(
-                t,
-                src,
-                tgt,
-                beam,
-                temperature,
-                top_k,
-                top_p,
-                no_repeat_ngram_size,
-                len_penalty,
-            ) for t in self._sent_tokenizer(text, src)
-        ])
+        new_text = list()
+
+        for t in text:
+            new_text.append(self._sent_tokenizer(text, src))
+
+        return self.predict(
+            new_text,
+            src,
+            tgt,
+            beam,
+            temperature,
+            top_k,
+            top_p,
+            no_repeat_ngram_size,
+            len_penalty,
+        )
