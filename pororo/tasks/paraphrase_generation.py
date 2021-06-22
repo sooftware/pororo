@@ -240,7 +240,7 @@ class PororoTransformerTransMulti(PororoGenerationBase):
     def predict(
         self,
         texts: list,
-        beam: int = 5,
+        beam: int = 10,
         temperature: float = 1.0,
         top_k: int = -1,
         top_p: float = -1,
