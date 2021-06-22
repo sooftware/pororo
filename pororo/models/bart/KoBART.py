@@ -152,13 +152,12 @@ class KoBartModel(object):
         Returns:
             (str): generated sentence string (if return_tokens=False)
             (List[str]): list of generated tokens (if return_tokens=True)
-
+g
         """
-
-        if isinstance(text, str):
-            texts = [text]
-        else:
-            texts = texts
+        # if isinstance(text, str):
+        #     texts = [text]
+        # else:
+        #     texts = texts
 
         tokenized = self.tokenize(texts)
         input_ids = tokenized["input_ids"]
@@ -200,8 +199,6 @@ class KoBartModel(object):
                 generated.tolist(),
                 skip_special_tokens=True,
             )
-
-            print("=======")
 
             return (output[0].strip() if isinstance(
                 text,
