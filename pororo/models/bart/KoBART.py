@@ -181,6 +181,7 @@ class KoBartModel(object):
             [[self.tokenizer.convert_tokens_to_ids("<unk>")]],
             length_penalty=length_penalty,
             max_length=max_len_a * len(input_ids[0]) + max_len_b,
+            num_return_sequences=10,
         )
 
         if return_tokens:
