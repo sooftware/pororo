@@ -374,7 +374,7 @@ class PororoTransformerParaphrase(PororoGenerationBase):
 
         output = self._model.translate(
             text,
-            beam=beam,
+            beam=10,
             sampling=sampling,
             temperature=temperature,
             sampling_topk=top_k,
@@ -383,6 +383,7 @@ class PororoTransformerParaphrase(PororoGenerationBase):
             max_len_b=50,
             no_repeat_ngram_size=no_repeat_ngram_size,
             lenpen=len_penalty,
+            nbest=10
         )
         output = self._postprocess(output)
         return output

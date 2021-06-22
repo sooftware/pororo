@@ -220,7 +220,7 @@ class PororoTransformerTransMulti(PororoGenerationBase):
         elif langtok_style == "multilingual":
             return f"__{lang}__"
 
-    def _preprocess(self, text: str, src: str, tgt: str) -> str:
+    def _preprocess(self, texts: list, src: str, tgt: str) -> list:
         """
         Preprocess non-chinese input sentence to replace whitespace token with whitespace
 
@@ -233,13 +233,17 @@ class PororoTransformerTransMulti(PororoGenerationBase):
             str: preprocessed non-chinese sentence
 
         """
-        if src == "en":
-            pieces = " ".join(self._tokenizer.segment(text.strip()))
-        else:
-            pieces = " ".join([c if c != " " else "▁" for c in text.strip()])
-        return f"{self._langtok(src, self._langtok_style)} {pieces} {self._langtok(tgt, self._langtok_style)}"
+        new_text = list()
 
-    def _postprocess(self, output: str) -> str:
+        for text in texts:
+            if src == "en":
+                pieces = " ".join(self._tokenizer.segment(text.strip()))
+            else:
+                pieces = " ".join([c if c != " " else "▁" for c in text.strip()])
+            new_text.append(f"{self._langtok(src, self._langtok_style)} {pieces} {self._langtok(tgt, self._langtok_style)}")
+        return new_text
+
+    def _postprocess(self, output: list) -> list:
         """
         Postprocess output sentence to replace whitespace
 
@@ -250,7 +254,10 @@ class PororoTransformerTransMulti(PororoGenerationBase):
             str: postprocessed output sentence
 
         """
-        return output.replace(" ", "").replace("▁", " ").strip()
+        new_output = list()
+        for o in output:
+             new_output.append(o.replace(" ", "").replace("▁", " ").strip())
+        return new_output
 
     def predict(
         self,
@@ -290,7 +297,7 @@ class PororoTransformerTransMulti(PororoGenerationBase):
 
         output = self._model.translate(
             text,
-            beam=beam,
+            beam=10,
             sampling=sampling,
             temperature=temperature,
             sampling_topk=top_k,
@@ -299,6 +306,7 @@ class PororoTransformerTransMulti(PororoGenerationBase):
             max_len_b=50,
             no_repeat_ngram_size=no_repeat_ngram_size,
             lenpen=len_penalty,
+            nbest=10,
         )
         output = self._postprocess(output)
         return output
