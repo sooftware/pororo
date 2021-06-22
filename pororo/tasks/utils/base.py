@@ -151,8 +151,6 @@ class PororoGenerationBase(PororoTaskBase):
         len_penalty: float = 1.0,
         **kwargs,
     ):
-        assert isinstance(text, str), "Input text should be string type"
-
         return self.predict(
             text,
             beam=beam,
