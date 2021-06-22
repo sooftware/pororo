@@ -282,7 +282,7 @@ class PororoTransformerTransMulti(PororoGenerationBase):
             max_len_b=50,
             no_repeat_ngram_size=no_repeat_ngram_size,
             lenpen=len_penalty,
-            num_return_sequences=10,
+            nbest=10,
         )
         outputs = self._postprocess(outputs)
         return outputs
