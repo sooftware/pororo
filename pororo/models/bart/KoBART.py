@@ -201,7 +201,16 @@ class KoBartModel(object):
                 skip_special_tokens=True,
             )
 
-            return (output[0].strip() if isinstance(
+            n_bests = list()
+    
+            for o in output:
+                n_bests.append(o.strip() if isinstance(
                 text,
                 str,
             ) else [o.strip() for o in output])
+
+            return n_bests
+            # return (output[0].strip() if isinstance(
+            #     text,
+            #     str,
+            # ) else [o.strip() for o in output])
