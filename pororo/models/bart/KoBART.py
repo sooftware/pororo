@@ -184,6 +184,8 @@ class KoBartModel(object):
             num_return_sequences=10,
         )
 
+        print(generated.size())
+
         if return_tokens:
             output = [
                 self.tokenizer.convert_ids_to_tokens(_)
@@ -202,7 +204,7 @@ class KoBartModel(object):
             )
 
             n_bests = list()
-    
+
             for o in output:
                 n_bests.append(o.strip() if isinstance(
                 text,
