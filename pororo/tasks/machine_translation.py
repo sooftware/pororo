@@ -341,7 +341,7 @@ class PororoTransformerTransMulti(PororoGenerationBase):
         new_text = list()
 
         for t in text:
-            new_text.append(self._sent_tokenizer(text, src))
+            new_text.append(self._sent_tokenizer(t, src))
 
         return self.predict(
             new_text,
