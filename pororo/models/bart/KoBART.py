@@ -170,7 +170,7 @@ class KoBartModel(object):
             use_cache=True,
             early_stopping=False,
             decoder_start_token_id=self.tokenizer.bos_token_id,
-            num_beams=beam,
+            num_beams=10,
             do_sample=sampling,
             temperature=temperature,
             top_k=sampling_topk if sampling_topk > 0 else None,
