@@ -306,7 +306,7 @@ class PororoTransformerTransMulti(PororoGenerationBase):
             max_len_b=50,
             no_repeat_ngram_size=no_repeat_ngram_size,
             lenpen=len_penalty,
-            nbest=10,
+            nbest=3,
         )
         output = self._postprocess(output)
         return output
